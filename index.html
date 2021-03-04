@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.23/css/jquery.dataTables.css">
+    <script type="text/javascript" charset="utf8"
+        src="https://cdn.datatables.net/1.10.23/js/jquery.dataTables.js"></script>
+    <link rel="stylesheet" type="text/css" href="./semantic/dist/semantic.min.css">
+    <link rel="stylesheet" type="text/css" href="./stylesheet.css">
+    <script src="./semantic/dist/semantic.min.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+
+    <div class="ui  container segment">
+
+        <form id="form" class="ui form" onsubmit="save()"  novalidate>
+            <div class="field">
+                <label>User</label>
+                <input type="text" name="user" placeholder="user">
+            </div>
+            <div class="field">
+                <label>Tweet</label>
+                <input type="text" name="tweet" placeholder="tweet">
+            </div>
+
+            <button class="ui button">Submit</button>
+        </form>
+
+    </div>
+    <a></a>
+    <div class="ui container segment">
+        <table id="table_id" class="cell-border compact stripe">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Tweets</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Row 1 Data 1</td>
+                    <td>Row 1 Data 2</td>
+                </tr>
+                <tr>
+                    <td>Row 2 Data 1</td>
+                    <td>Row 2 Data 2</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <script>
+        $(document).ready(load());
+
+        function save(e) {
+            e.preventDefault();
+            $.ajax({
+                url: "http://localhost:9000/save", success: success(),
+                data: $('form').serialize(),
+                error: function (result) {
+                    alert("error");
+                },
+            });
+        }
+
+        function success() {
+            alert("saved");
+            load();
+        }
+
+        function load() {
+            $('#table_id').DataTable(
+                {
+                    ajax: 'http://localhost:9000/'
+                }
+            );
+        }
+
+    </script>
+</body>
+
+</html>
